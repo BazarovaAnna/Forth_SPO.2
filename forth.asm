@@ -7,7 +7,7 @@ section 	.data
 	cmode_message: 	db "Режим компиляции", 0
 	mode: 	dq 0
 	was_branch: 	db 0
-	here: 	dq forth_mem
+	here: 	dq	forth_mem
 	stack_start: 	dq 0
 
 
@@ -20,7 +20,7 @@ section 	.bss
 
 %include 	'lib.inc'
 %include 	'macros.inc'
-%include	'dict.inc'
+%include	'stuff.inc'
 %include 	'additional.inc'
 %include 	'words.inc'
 %include 	'colon.inc'

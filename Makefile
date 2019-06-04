@@ -11,6 +11,11 @@ bin_dir:
 
 clean:
 	rm -rf bin
+	
+run:
+	./bin/forth
+	
+run3:
+	echo "running course work part 3"
+	cat part3.frt | bin/forth
 
-run: build
-	cat branches.forth - | ./forth

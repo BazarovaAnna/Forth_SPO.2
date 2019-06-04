@@ -178,7 +178,7 @@ native 	'execute', 	execute
 ;-----------------------
 
 ; Управление выполнением
-native 	'branch0',	branchifz
+native 	'branchifz',	branchifz
 	pop 	rax
 	test 	rax, 	rax
 	jnz 	.skip
@@ -200,9 +200,9 @@ native 	'docol', 	docol
 	jmp 	next
    
 native 	'exit', 	exit
-	mov 	pc, 	[rstack]
-	add 	rstack,	8
-	jmp 	next
+	mov 	rax, 	60
+	xor 	rdi, 	rdi
+	syscall
 
 ;--------------------------
 
