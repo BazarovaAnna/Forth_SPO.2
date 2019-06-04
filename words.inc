@@ -13,7 +13,7 @@ native 'swap', swap
 native 'dup', dup
   push qword [rsp]
   jmp next
-  
+;------------------------
 ; Арифметические операции
 native '+', plus
   pop rdx
@@ -74,7 +74,7 @@ native '=', equals
   xor rax, rax
   push rax
   jmp next
-  
+;---------------------
 ; Логические операции
 native 'not', not
   pop rax
@@ -122,7 +122,7 @@ native 'lor', lor
   .yes:
     push rax
     jmp next
-    
+;---------------------------
 ; Работа со стеком возвратов
 native '>r', to_r
   pop rax
@@ -137,7 +137,7 @@ native 'r>', from_r
 native "r@", r_fetch
   push qword [rstack]
   jmp next
-  
+;----------------------------
 ; Работа с памятью
 native '@', fetch
   pop rax
@@ -166,37 +166,36 @@ native 'execute', execute
 	pop rax
 	mov w, rax
 	jmp [rax]
-	
+;-----------------------
 ; Управление выполнением
-native 'docol', docol
-   sub rstack, 8
-   mov [rstack], pc
-   add w, 8
-   mov pc, w
-   jmp next
+native 'branch0', branchifz
+  pop rax
+  test rax, rax
+  jnz .skip
+  mov pc, [pc]
+  jmp next
+  .skip:
+    add pc, 8
+    jmp next
 
 native 'branch', branch
-   mov pc, [pc]
-   jmp next
+    mov pc, [pc]
+    jmp next
 
-native 'branch0', branch0
-   pop rax
-   test rax, rax
-   jnz .skip
-   mov pc, [pc]
-   jmp next
-
-.skip:
-   add pc, 8
-   jmp next
+native 'docol', docol
+  sub rstack, 8
+  mov [rstack], pc
+  add w, 8
+  mov pc, w
+  jmp next
    
 native 'exit', exit
-   mov pc, [rstack]
-   add rstack, 8
-   jmp next 
-
+  mov pc, [rstack]
+  add rstack, 8
+  jmp next
+;--------------------------
 ; Служебные
 native 'lit', lit
-   push qword [pc]
-   add pc, 8
-   jmp next
+    push qword [pc]
+    add pc, 8
+    jmp next
